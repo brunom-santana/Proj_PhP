@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>Listagem Dentista</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<script>
+		function deletaDentista(dentistaId){
+			if(confirm('Confirme a ação')){
+				fetch(`/dentista/${dentistaId}`, {
+					method: "DELETE"
+				})
+				.then(response => {
+					if(response.ok){
+						alert("Dentista removido!");
+						location.reload();
+					}
+				})
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<%- include('partials/header') %>
+	<h1>Pagina de Dentistas</h1>
+	<ul>
+		<% obj_dentistas.forEach(dentista => {  %>
+			<li>
+				Nome: <%= dentista.nome %><br> 
+				CPF: <%= dentista.cpf %> <br>
+                CRM: <%= dentista.crm %> <br>
+				<a href="#remove" onclick="deletaDentista(<%= dentista.id %>); return false;"><button class="btn btn-danger">Excluir</button></a>
+				<br>
+			</li>
+		<% }) %>
+	</ul>
+	
+</body>
+</html>

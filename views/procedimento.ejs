@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>Listagem Paciente</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<script>
+		function deletaProcedimento(procedimentoId){
+			if(confirm('Confirme a ação')){
+				fetch(`/procedimento/${procedimentoId}`, {
+					method: "DELETE"
+				})
+				.then(response => {
+					if(response.ok){
+						alert("procedimento removido!");
+						location.reload();
+					}
+				})
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<%- include('partials/header') %>
+	<h1>Pagina de Procedimentos</h1>
+	<ul>
+		<% obj_procedimentos.forEach(procedimento => {  %>
+			<li>
+				Nome: <%= procedimento.nome %><br> 
+				Descrição: <%= procedimento.descricao %> <br> 
+                Preço: <%= procedimento.preco %> <br>
+				<a href="#remove" onclick="deletaProcedimento(<%= procedimento.id %>); return false;"><button class="btn btn-danger">Excluir</button></a>
+				<br>
+			</li>
+		<% }) %>
+	</ul>
+	
+</body>
+</html>
